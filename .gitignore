@@ -1,0 +1,8 @@
+*.pyc
+venv
+build
+/bin
+/include
+/lib
+/share
+/local

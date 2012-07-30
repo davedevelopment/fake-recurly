@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<account href="/accounts/{{ account.accountCode }}">
+  <adjustments href="/accounts/{{ account.accountCode }}/adjustments"/>
+  <billing_info href="/accounts/{{ account.accountCode }}/billing_info"/>
+  <invoices href="/accounts/{{ account.accountCode }}/invoices"/>
+  <subscriptions href="/accounts/{{ account.accountCode }}/subscriptions"/>
+  <transactions href="/accounts/{{ account.accountCode }}/transactions"/>
+  <account_code>{{ account.accountCode }}</account_code>
+  <state>active</state>
+  <username nil="nil"></username>
+  <email>verena@example.com</email>
+  <first_name>Verena</first_name>
+  <last_name>Example</last_name>
+  <accept_language nil="nil"></accept_language>
+  <hosted_login_token>a92468579e9c4231a6c0031c4716c01d</hosted_login_token>
+  <created_at type="datetime">2011-10-25T12:00:00</created_at>
+</account>
+
+
