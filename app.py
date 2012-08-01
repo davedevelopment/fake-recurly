@@ -59,6 +59,14 @@ def set_subscription_status(uuid):
     Subscription.save(sub)
     return get_subscription(uuid)
 
+# Not part of the official API, used to manage state while testing
+@app.route("/subscriptions/<uuid>/past_due", methods=["POST"])
+def set_subscription_past_due(uuid):
+    sub = find_subscription_or_404(uuid)
+    sub.past_due = bool(request.form['past_due'])
+    Subscription.save(sub)
+    return get_subscription(uuid)
+
 @app.route("/subscriptions/<uuid>/cancel", methods=["PUT"])
 def cancel_subscription(uuid):
     sub = find_subscription_or_404(uuid)
@@ -107,8 +115,14 @@ def get_account(accountCode):
 def get_account_transactions(accountCode):
     find_account_or_404(accountCode) 
     transactions = Transaction.findByAccount(accountCode)    
-    print transactions
     return render_template("transactions.xml", transactions=transactions), 200
+
+@app.route("/accounts/<accountCode>/subscriptions", methods=["GET"])
+def get_account_subscriptions(accountCode):
+    find_account_or_404(accountCode) 
+    state = request.args.get('state', False)
+    subscriptions = Subscription.findByAccount(accountCode, state)    
+    return render_template("subscriptions.xml", subscriptions=subscriptions), 200, { "X-Records": len(subscriptions) }
 
 @app.route("/accounts", methods=["POST"])
 def create_account():

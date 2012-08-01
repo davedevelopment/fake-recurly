@@ -27,6 +27,7 @@ class Subscription:
     def __init__(self):
         self.uuid = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(32))
         self.state = 'active'
+        self.past_due = False
         pass
     
     @classmethod
@@ -43,6 +44,23 @@ class Subscription:
         if uuid in cls._data:
             return cls._data[uuid]
         return None
+
+    @classmethod
+    def findByAccount(cls, code, state=False):
+        subs = dict((k,v) for (k,v) in cls._data.iteritems() if v.accountCode == code)
+
+        if state == False:
+            return subs
+
+        ret = {}
+        print subs
+        for uuid,sub in subs.iteritems():
+            if state == 'past_due' and sub.past_due:
+                ret[uuid] = sub
+            elif state == sub.state:
+                ret[uuid] = sub
+
+        return ret
 
     @classmethod
     def save(cls, sub):
