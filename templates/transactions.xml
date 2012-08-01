@@ -10,7 +10,7 @@
     <amount_in_cents type="integer">1000</amount_in_cents>
     <tax_in_cents type="integer">0</tax_in_cents>
     <currency>USD</currency>
-    <status>success</status>
+    <status>{{ transaction.status }}</status>
     <reference nil="nil"></reference>
     <test type="boolean">true</test>
     <voidable type="boolean">true</voidable>

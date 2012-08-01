@@ -80,6 +80,16 @@ def get_transaction(uuid):
         raise NotFoundError("Couldn't find transaction with uuid = %s" % uuid)
     return render_template("transaction.xml", transaction=Transaction.find(uuid)), 200
 
+# Not part of the official API, used to manage state while testing
+@app.route("/transactions/<uuid>/status", methods=["POST"])
+def set_transaction_status(uuid):
+    trans = Transaction.find(uuid)
+    if not trans:
+        raise NotFoundError("Couldn't find transaction with uuid = %s" % uuid)
+    trans.status = request.form['status']
+    Transaction.save(trans)
+    return get_transaction(uuid)
+
 # ACCOUNTS
 
 def find_account_or_404(accountCode):
