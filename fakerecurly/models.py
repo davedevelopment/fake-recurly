@@ -75,6 +75,7 @@ class Transaction:
 
     def __init__(self):
         self.status = 'success'
+        self.recurring = True
         self.uuid = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(32))
 
     @classmethod 

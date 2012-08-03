@@ -9,6 +9,7 @@
   <tax_in_cents type="integer">0</tax_in_cents>
   <currency>USD</currency>
   <status>{{ transaction.status }}</status>
+  <recurring type="boolean">{% if transaction.recurring %}true{% else %}false{% endif %}</recurring>
   <reference nil="nil"></reference>
   <test type="boolean">true</test>
   <voidable type="boolean">true</voidable>

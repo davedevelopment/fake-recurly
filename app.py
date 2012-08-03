@@ -98,6 +98,16 @@ def set_transaction_status(uuid):
     Transaction.save(trans)
     return get_transaction(uuid)
 
+# Not part of the official API, used to manage recurring flag while testing
+@app.route("/transactions/<uuid>/recurring", methods=["POST"])
+def set_transaction_recurring(uuid):
+    trans = Transaction.find(uuid)
+    if not trans:
+        raise NotFoundError("Couldn't find transaction with uuid = %s" % uuid)
+    trans.recurring = bool(int(request.form['recurring']))
+    Transaction.save(trans)
+    return get_transaction(uuid)
+
 # ACCOUNTS
 
 def find_account_or_404(accountCode):
