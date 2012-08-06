@@ -90,6 +90,13 @@ def cancel_subscription(uuid):
     Subscription.save(sub)
     return get_subscription(uuid)
 
+@app.route("/subscriptions/<uuid>/terminate", methods=["PUT"])
+def terminate_subscription(uuid):
+    sub = find_subscription_or_404(uuid)
+    sub.state = "expired"
+    Subscription.save(sub)
+    return get_subscription(uuid)
+
 @app.route("/subscriptions/<uuid>", methods=["GET"])
 def get_subscription(uuid):
     sub = find_subscription_or_404(uuid)
