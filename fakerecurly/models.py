@@ -1,4 +1,5 @@
 import string, random
+from datetime import datetime
 
 class Account:
 
@@ -76,6 +77,7 @@ class Transaction:
     def __init__(self):
         self.status = 'success'
         self.recurring = True
+        self.created = datetime.now()
         self.uuid = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(32))
 
     @classmethod 

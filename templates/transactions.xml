@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transactions type="array">
-  {% for uuid,transaction in transactions.iteritems() %}
+  {% for transaction in transactions %}
   <transaction href="/transactions/{{ transaction.uuid }}" type="credit_card">
     <account href="/accounts/{{ transaction.accountCode }}"/>
     <invoice href="/invoices/1108"/>

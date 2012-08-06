@@ -2,6 +2,7 @@ from flask import Flask, url_for, request, render_template, redirect
 from xml.etree.ElementTree import ElementTree, fromstring
 from fakerecurly.models import *
 from fakerecurly.errors import *
+from operator import attrgetter
 import time
 
 app = Flask(__name__)
@@ -67,6 +68,21 @@ def set_subscription_past_due(uuid):
     Subscription.save(sub)
     return get_subscription(uuid)
 
+# Not part of the official API, used to generate a new transaction
+@app.route("/subscriptions/<uuid>/bill", methods=["POST"])
+def generate_bill_for_subscription(uuid):
+    sub = find_subscription_or_404(uuid)
+    trans = Transaction()
+    trans.accountCode = sub.accountCode
+    trans.subscriptionUuid = sub.uuid
+    try:
+        trans.status = request.form['status']
+    except KeyError:
+        trans.status = 'success'
+    print "Creating transaction:%s" % (trans.uuid)
+    Transaction.save(trans)
+    return get_transaction(trans.uuid)
+
 @app.route("/subscriptions/<uuid>/cancel", methods=["PUT"])
 def cancel_subscription(uuid):
     sub = find_subscription_or_404(uuid)
@@ -125,6 +141,7 @@ def get_account(accountCode):
 def get_account_transactions(accountCode):
     find_account_or_404(accountCode) 
     transactions = Transaction.findByAccount(accountCode)    
+    transactions = sorted(transactions.values(), key=attrgetter('created'))
     return render_template("transactions.xml", transactions=transactions), 200
 
 @app.route("/accounts/<accountCode>/subscriptions", methods=["GET"])
