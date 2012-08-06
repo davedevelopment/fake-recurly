@@ -6,7 +6,7 @@
     <invoice href="/invoices/1108"/>
     <subscription href="/subscriptions/{{ transaction.subscriptionUuid }}"/>
     <uuid>{{ transaction.uuid }}</uuid>
-    <action>purchase</action>
+    <action>{{ transaction.action }}</action>
     <amount_in_cents type="integer">1000</amount_in_cents>
     <tax_in_cents type="integer">0</tax_in_cents>
     <currency>USD</currency>

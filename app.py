@@ -79,6 +79,10 @@ def generate_bill_for_subscription(uuid):
         trans.status = request.form['status']
     except KeyError:
         trans.status = 'success'
+    try:
+        trans.action = request.form['action']
+    except KeyError:
+        trans.action = 'purchase'
     print "Creating transaction:%s" % (trans.uuid)
     Transaction.save(trans)
     return get_transaction(trans.uuid)
