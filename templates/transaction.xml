@@ -18,7 +18,7 @@
   <avs_result code="" nil="nil"></avs_result>
   <avs_result_street nil="nil"></avs_result_street>
   <avs_result_postal nil="nil"></avs_result_postal>
-  <created_at type="datetime">2011-06-27T12:34:56Z</created_at>
+  <created_at type="datetime">{{ transaction.created.strftime("%Y-%m-%dT%H:%M:%SZ") }}</created_at>
   <details>
   </details>
   <a name="refund" href="/transactions/{{ transaction.uuid }}" method="delete"/>
