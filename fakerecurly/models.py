@@ -1,6 +1,33 @@
 import string, random
 from datetime import datetime
 
+class Invoice:
+
+    _data = {}
+
+    def __init__(self, accountCode):
+        self.uuid = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(32))
+        self.state = "open"
+        self.accountCode = accountCode
+
+    @classmethod 
+    def find(cls, code):
+        if code in cls._data:
+            return cls._data[code]
+        return None
+
+    @classmethod
+    def findByAccount(cls, code):
+        return dict((k,v) for (k,v) in cls._data.iteritems() if v.accountCode == code)
+
+    @classmethod
+    def save(cls, invoice):
+        cls._data[invoice.uuid] = invoice
+
+    @classmethod
+    def truncate(cls):
+        cls._data = {}
+
 class Account:
 
     _data = {}

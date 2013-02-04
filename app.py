@@ -10,6 +10,7 @@ app = Flask(__name__)
 @app.route("/", methods=["DELETE"])
 def teardown():
     print "Tearing down data"
+    Invoice.truncate();
     Transaction.truncate()
     Subscription.truncate()
     Account.truncate()
@@ -134,6 +135,35 @@ def set_transaction_recurring(uuid):
     trans.recurring = bool(int(request.form['recurring']))
     Transaction.save(trans)
     return get_transaction(uuid)
+
+#INVOICES
+
+# Not part of the official API, used to generate a new invoice
+@app.route("/accounts/<accountCode>/stubinvoices", methods=["POST"])
+def generate_invoice_for_account(accountCode):
+    acc = find_account_or_404(accountCode)
+    invoice = Invoice(accountCode)
+    try:
+        invoice.state = request.form['state']
+    except KeyError:
+        invoice.state = 'open'
+    print "Creating Invoice:%s" % (invoice.uuid)
+    Invoice.save(invoice)
+    return "", 201
+
+@app.route("/accounts/<accountCode>/invoices", methods=["GET"])
+def get_account_invoices(accountCode):
+    find_account_or_404(accountCode) 
+    invoices = Invoice.findByAccount(accountCode)    
+    xml = render_template("invoices.xml", invoices=invoices)
+    return xml, 200, { "X-Records": len(invoices) }
+
+@app.route("/invoices/<invoiceCode>/mark_failed", methods=["PUT", "POST"])
+def mark_invoice_failed(invoiceCode):
+    inv = Invoice.find(invoiceCode)
+    inv.state = 'failed';
+    Invoice.save(inv);
+    return "", 201
 
 # ACCOUNTS
 
