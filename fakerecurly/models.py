@@ -1,6 +1,34 @@
 import string, random
 from datetime import datetime
 
+class Coupon:
+
+    _data = {}
+
+    def __init__(self, code):
+        self.couponCode = code
+
+    @classmethod 
+    def find(cls, code):
+        if code in cls._data:
+            return cls._data[code]
+        return None
+
+    @classmethod
+    def save(cls, coupon):
+        cls._data[coupon.couponCode] = coupon
+
+    @classmethod
+    def truncate(cls):
+        cls._data = {}
+
+    @classmethod
+    def fromTree(cls, tree):
+        coupon = Coupon(tree.find("coupon_code").text)
+        coupon.name = tree.find("name").text
+        coupon.discountType = tree.find("discount_type").text
+        return coupon
+
 class Invoice:
 
     _data = {}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coupon href="/coupons/{{ coupon.couponCode }}">
+    <name>{{ coupon.name }}</name>
+</coupon>
+

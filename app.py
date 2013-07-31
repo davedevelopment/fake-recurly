@@ -22,6 +22,17 @@ def resource_not_found(error):
     print "error: %s" % error
     return render_template("error.xml", error=error), 404
 
+# COUPONS
+
+@app.route("/coupons", methods=["POST"])
+def post_coupon():
+    tree = fromstring(request.data)
+    coupon = Coupon.fromTree(tree)
+    print "Creating coupon:%s" % (coupon.couponCode)
+    Coupon.save(coupon)
+    return render_template("coupon.xml", coupon=coupon), 201
+
+
 # SUBSCRIPTIONS
 
 @app.route("/subscriptions", methods=["POST"])
