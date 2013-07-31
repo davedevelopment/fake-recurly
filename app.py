@@ -212,6 +212,20 @@ def create_account():
     Account.save(Account(accountCode))
     return render_template("account.xml", account=Account.find(accountCode)), 201
 
+# not part of the official api, used to manage state in testing
+@app.route("/accounts/<accountCode>/billing_method", methods=["POST"])
+def post_account_billing_method(accountCode):
+    method = request.form['method']
+    acc = find_account_or_404(accountCode) 
+    acc.billingMethod = method
+    Account.save(acc)
+    return method, 200
+
+@app.route("/accounts/<accountCode>/billing_info", methods=["GET"])
+def get_account_billing_info(accountCode):
+    acc = find_account_or_404(accountCode) 
+    return render_template("billing_info.xml", account=acc), 200
+
 # PLANS 
 
 
