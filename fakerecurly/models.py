@@ -35,6 +35,7 @@ class Invoice:
 
     def __init__(self, accountCode):
         self.uuid = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(32))
+        self.invoiceNumber = self.uuid
         self.state = "open"
         self.accountCode = accountCode
 
@@ -43,6 +44,10 @@ class Invoice:
         if code in cls._data:
             return cls._data[code]
         return None
+
+    @classmethod
+    def findByInvoiceNumber(cls, code):
+        return cls.find(code)
 
     @classmethod
     def findByAccount(cls, code):

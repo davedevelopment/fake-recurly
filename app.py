@@ -169,9 +169,9 @@ def get_account_invoices(accountCode):
     xml = render_template("invoices.xml", invoices=invoices)
     return xml, 200, { "X-Records": len(invoices) }
 
-@app.route("/invoices/<invoiceCode>/mark_failed", methods=["PUT", "POST"])
-def mark_invoice_failed(invoiceCode):
-    inv = Invoice.find(invoiceCode)
+@app.route("/invoices/<invoiceNumber>/mark_failed", methods=["PUT", "POST"])
+def mark_invoice_failed(invoiceNumber):
+    inv = Invoice.findByInvoiceNumber(invoiceNumber)
     inv.state = 'failed';
     Invoice.save(inv);
     return "", 201
