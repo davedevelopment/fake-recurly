@@ -67,6 +67,7 @@ class Account:
 
     def __init__(self, accountCode):
         self.accountCode = accountCode
+        self.billingMethod = 'card'
 
     @classmethod 
     def find(cls, code):
