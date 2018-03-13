@@ -128,7 +128,7 @@ def get_transaction(uuid):
     return render_template("transaction.xml", transaction=Transaction.find(uuid)), 200
 
 @app.route("/transactions/<uuid>/subscriptions", methods=["GET"])
-def get_transaction(uuid):
+def get_transactions_subscriptions(uuid):
     if not Transaction.find(uuid):
         raise NotFoundError("Couldn't find transaction with uuid = %s" % uuid)
     transaction=Transaction.find(uuid)
