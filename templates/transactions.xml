@@ -4,7 +4,7 @@
   <transaction href="/transactions/{{ transaction.uuid }}" type="credit_card">
     <account href="/accounts/{{ transaction.accountCode }}"/>
     <invoice href="/invoices/1108"/>
-    <subscription href="/subscriptions/{{ transaction.subscriptionUuid }}"/>
+    <subscriptions href="/transactions/{{ transaction.uuid }}/subscriptions"/>
     <uuid>{{ transaction.uuid }}</uuid>
     <action>{{ transaction.action }}</action>
     <amount_in_cents type="integer">1000</amount_in_cents>

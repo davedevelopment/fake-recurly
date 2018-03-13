@@ -127,6 +127,14 @@ def get_transaction(uuid):
         raise NotFoundError("Couldn't find transaction with uuid = %s" % uuid)
     return render_template("transaction.xml", transaction=Transaction.find(uuid)), 200
 
+@app.route("/transactions/<uuid>/subscriptions", methods=["GET"])
+def get_transaction(uuid):
+    if not Transaction.find(uuid):
+        raise NotFoundError("Couldn't find transaction with uuid = %s" % uuid)
+    transaction=Transaction.find(uuid)
+    subscription = Subscription.find(transaction.subscriptionUuid)
+    return render_template("subscriptions.xml", subscriptions={subscription.uuid: subscription}), 200
+
 # Not part of the official API, used to manage state while testing
 @app.route("/transactions/<uuid>/status", methods=["POST"])
 def set_transaction_status(uuid):
@@ -269,4 +277,4 @@ def delete_plan(planCode):
 
 if __name__ == '__main__':
     app.debug = True
-    app.run('0.0.0.0', 5000)
+    app.run('0.0.0.0', 5001)
