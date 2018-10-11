@@ -182,7 +182,8 @@ def mark_invoice_failed(invoiceNumber):
     inv = Invoice.findByInvoiceNumber(invoiceNumber)
     inv.state = 'failed';
     Invoice.save(inv);
-    return "", 201
+    xml = render_template("invoice_collection.xml", invoices={inv.uuid: inv})
+    return xml, 201
 
 # ACCOUNTS
 
@@ -277,4 +278,4 @@ def delete_plan(planCode):
 
 if __name__ == '__main__':
     app.debug = True
-    app.run('0.0.0.0', 5000)
+    app.run('0.0.0.0', 5002)

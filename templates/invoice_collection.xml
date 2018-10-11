@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<invoice_collection>
+  {% for uuid,invoice in invoices.items() %}
+  <charge_invoice href="/invoices/{{ invoice.uuid }}">
+    <account href="/accounts/{{ invoice.accountCode }}"/>
+    <uuid>{{ invoice.uuid }}</uuid>
+    <state>{{ invoice.state }}</state>
+  </charge_invoice>
+  {% endfor %}
+</invoice_collection>
