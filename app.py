@@ -4,6 +4,7 @@ from fakerecurly.models import *
 from fakerecurly.errors import *
 from operator import attrgetter
 import time
+import sys
 
 app = Flask(__name__)
 
@@ -278,4 +279,4 @@ def delete_plan(planCode):
 
 if __name__ == '__main__':
     app.debug = True
-    app.run('0.0.0.0', 5002)
+    app.run('0.0.0.0', int(sys.argv[1] if len(sys.argv) > 1 else 5000))
